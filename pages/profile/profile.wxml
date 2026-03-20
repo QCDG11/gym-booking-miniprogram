@@ -1,0 +1,26 @@
+<view class="container">
+  <view class="header">
+    <view class="avatar">
+      <text class="avatar-text">{{userInfo.nickname || userInfo.username}}</text>
+    </view>
+    <text class="username">{{userInfo.username}}</text>
+    <text class="role">{{userInfo.role}}</text>
+  </view>
+
+  <view class="menu-list">
+    <view class="menu-item">
+      <text class="menu-label">昵称</text>
+      <text class="menu-value">{{userInfo.nickname || '-'}}</text>
+    </view>
+    <view class="menu-item">
+      <text class="menu-label">手机</text>
+      <text class="menu-value">{{userInfo.phone || '-'}}</text>
+    </view>
+    <view class="menu-item">
+      <text class="menu-label">性别</text>
+      <text class="menu-value">{{userInfo.gender || '-'}}</text>
+    </view>
+  </view>
+
+  <button class="btn-logout" bindtap="onLogout">退出登录</button>
+</view>

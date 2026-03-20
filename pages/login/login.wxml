@@ -1,0 +1,21 @@
+<view class="container">
+  <view class="header">
+    <text class="title">{{isRegister ? '注册' : '登录'}}</text>
+    <text class="subtitle">健身房预约系统</text>
+  </view>
+
+  <view class="form">
+    <view class="input-group">
+      <input class="input" placeholder="请输入用户名" value="{{username}}" bindinput="onUsernameInput" />
+    </view>
+    <view class="input-group">
+      <input class="input" type="password" placeholder="请输入密码" value="{{password}}" bindinput="onPasswordInput" />
+    </view>
+
+    <button class="btn-primary" bindtap="onSubmit">{{isRegister ? '注册' : '登录'}}</button>
+    
+    <view class="toggle" bindtap="toggleMode">
+      <text>{{isRegister ? '已有账号？立即登录' : '没有账号？立即注册'}}</text>
+    </view>
+  </view>
+</view>

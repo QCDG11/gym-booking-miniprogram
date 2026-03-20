@@ -1,0 +1,30 @@
+<view class="container">
+  <view class="section">
+    <view class="section-title">全部课程</view>
+    <view class="course-list">
+      <view class="course-item" wx:for="{{courses}}" wx:key="id">
+        <image class="course-image" src="{{item.imageUrl || '/images/course-default.jpg'}}" mode="aspectFill" />
+        <view class="course-info">
+          <text class="course-name">{{item.name}}</text>
+          <text class="course-desc">{{item.description}}</text>
+          <text class="course-price">¥{{item.price || 0}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="section">
+    <view class="section-title">可预约课表</view>
+    <view class="schedule-list">
+      <view class="schedule-item" wx:for="{{schedules}}" wx:key="id">
+        <view class="schedule-info">
+          <text class="schedule-name">{{item.courseName}}</text>
+          <text class="schedule-coach">教练：{{item.coachName}}</text>
+          <text class="schedule-time">{{item.startTime}}</text>
+          <text class="schedule-location">场地：{{item.location}}</text>
+        </view>
+        <button class="btn-book" bindtap="onBookCourse" data-id="{{item.id}}">预约</button>
+      </view>
+    </view>
+  </view>
+</view>

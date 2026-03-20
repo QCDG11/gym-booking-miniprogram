@@ -1,0 +1,28 @@
+<view class="container">
+  <!-- 轮播图 -->
+  <swiper class="banner" indicator-dots autoplay circular>
+    <swiper-item wx:for="{{banners}}" wx:key="id">
+      <image class="banner-image" src="{{item.image}}" mode="aspectFill" />
+    </swiper-item>
+  </swiper>
+
+  <!-- 快捷功能 -->
+  <view class="quick-actions">
+    <view class="action-grid">
+      <view class="action-item" wx:for="{{quickActions}}" wx:key="id" bindtap="onQuickAction" data-url="{{item.url}}">
+        <view class="action-icon">
+          <text class="iconfont">{{item.icon}}</text>
+        </view>
+        <text class="action-name">{{item.name}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 今日推荐 -->
+  <view class="section">
+    <view class="section-title">今日推荐</view>
+    <view class="section-content">
+      <text class="empty-text">暂无推荐课程</text>
+    </view>
+  </view>
+</view>
