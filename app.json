@@ -19,27 +19,19 @@
     "list": [
       {
         "pagePath": "pages/index/index",
-        "text": "首页",
-        "iconPath": "images/home.png",
-        "selectedIconPath": "images/home-active.png"
+        "text": "首页"
       },
       {
         "pagePath": "pages/courses/courses",
-        "text": "课程",
-        "iconPath": "images/course.png",
-        "selectedIconPath": "images/course-active.png"
+        "text": "课程"
       },
       {
         "pagePath": "pages/booking/booking",
-        "text": "预约",
-        "iconPath": "images/book.png",
-        "selectedIconPath": "images/book-active.png"
+        "text": "预约"
       },
       {
         "pagePath": "pages/profile/profile",
-        "text": "我的",
-        "iconPath": "images/profile.png",
-        "selectedIconPath": "images/profile-active.png"
+        "text": "我的"
       }
     ]
   },
