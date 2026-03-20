@@ -4,8 +4,8 @@
     <view class="booking-list">
       <view class="booking-item" wx:for="{{courseBookings}}" wx:key="id">
         <view class="booking-info">
-          <text class="booking-name">{{item.schedule?.course?.name}}</text>
-          <text class="booking-time">{{item.schedule?.startTime}}</text>
+          <text class="booking-name">{{item.schedule.course.name}}</text>
+          <text class="booking-time">{{item.schedule.startTime}}</text>
           <text class="booking-status">{{item.status}}</text>
         </view>
         <button class="btn-cancel" wx:if="{{item.status === 'CONFIRMED'}}" bindtap="onCancel" data-id="{{item.id}}" data-type="course">取消</button>
@@ -19,7 +19,7 @@
     <view class="booking-list">
       <view class="booking-item" wx:for="{{privateBookings}}" wx:key="id">
         <view class="booking-info">
-          <text class="booking-name">{{item.privateTraining?.type}}</text>
+          <text class="booking-name">{{item.privateTraining.type}}</text>
           <text class="booking-time">{{item.bookedTime}}</text>
           <text class="booking-status">{{item.status}}</text>
         </view>
