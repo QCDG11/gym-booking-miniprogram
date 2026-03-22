@@ -8,6 +8,22 @@ Page({
   },
 
   onShow() {
+    this.checkLoginAndLoad();
+  },
+
+  checkLoginAndLoad() {
+    const token = wx.getStorageSync('token');
+    if (!token) {
+      wx.showModal({
+        title: '提示',
+        content: '请先登录',
+        showCancel: false,
+        success: () => {
+          wx.navigateTo({ url: '/pages/login/login' });
+        }
+      });
+      return;
+    }
     this.loadData();
   },
 
@@ -21,7 +37,9 @@ Page({
       this.setData({ courseBookings, privateBookings });
     } catch (err) {
       console.error('加载失败', err);
-      wx.showToast({ title: '请先登录', icon: 'none' });
+      if (err.message && err.message.includes('登录')) {
+        wx.navigateTo({ url: '/pages/login/login' });
+      }
     } finally {
       wx.hideLoading();
     }
@@ -58,7 +76,7 @@ Page({
   },
 
   goToCourses() {
-    wx.navigateTo({ url: '/pages/courses/courses' });
+    wx.switchTab({ url: '/pages/courses/courses' });
   },
 
   goToCoaches() {

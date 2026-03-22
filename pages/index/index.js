@@ -5,10 +5,10 @@ Page({
     userInfo: null,
     stats: { courseBookings: 0, privateSessions: 0 },
     quickActions: [
-      { id: 1, name: '课程预约', icon: '📅', url: '/pages/courses/courses', color: '#FF6B6B' },
-      { id: 2, name: '私教预约', icon: '👨‍🏫', url: '/pages/coaches/coaches', color: '#4ECDC4' },
-      { id: 3, name: '我的预约', icon: '📋', url: '/pages/booking/booking', color: '#45B7D1' },
-      { id: 4, name: '我的私教', icon: '💪', url: '/pages/private/private', color: '#96CEB4' }
+      { id: 1, name: '课程预约', icon: '📅', url: '/pages/courses/courses', type: 'tab', color: '#FF6B6B' },
+      { id: 2, name: '私教预约', icon: '👨‍🏫', url: '/pages/coaches/coaches', type: 'navigate', color: '#4ECDC4' },
+      { id: 3, name: '我的预约', icon: '📋', url: '/pages/booking/booking', type: 'tab', color: '#45B7D1' },
+      { id: 4, name: '我的私教', icon: '💪', url: '/pages/private/private', type: 'navigate', color: '#96CEB4' }
     ],
     recommendedCourses: []
   },
@@ -48,8 +48,12 @@ Page({
   },
 
   onQuickAction(e) {
-    const { url } = e.currentTarget.dataset;
-    console.log('点击跳转:', url);
-    wx.navigateTo({ url });
+    const { url, type } = e.currentTarget.dataset;
+    console.log('点击:', url, type);
+    if (type === 'tab') {
+      wx.switchTab({ url });
+    } else {
+      wx.navigateTo({ url });
+    }
   }
 });
