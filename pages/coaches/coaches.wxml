@@ -1,57 +1,14 @@
 <view class="container">
   <view class="coach-list">
     <block wx:for="{{coaches}}" wx:key="id">
-      <view class="coach-card" bindtap="onSelectCoach" data-coach="{{item}}">
-        <image class="coach-avatar" src="{{item.avatar || '/images/default-avatar.png'}}" mode="aspectFill"></image>
+      <view class="coach-item" bindtap="onSelectCoach" data-coach="{{item}}">
         <view class="coach-info">
           <text class="coach-name">{{item.name}}</text>
           <text class="coach-specialty">{{item.specialty}}</text>
-          <text class="coach-intro">{{item.introduction}}</text>
-          <text class="coach-exp">从业 {{item.yearsOfExperience}} 年</text>
         </view>
-        <view class="book-btn">预约</view>
+        <text class="arrow">></text>
       </view>
     </block>
   </view>
-
-  <view class="empty" wx:if="{{coaches.length === 0}}">
-    <text>暂无私教</text>
-  </view>
-</view>
-
-<!-- 预约弹窗 -->
-<view class="modal-mask" wx:if="{{showBookingModal}}" bindtap="onCloseModal"></view>
-<view class="modal" wx:if="{{showBookingModal}}">
-  <view class="modal-header">
-    <text class="modal-title">购买私教课程</text>
-    <text class="modal-close" bindtap="onCloseModal">×</text>
-  </view>
-  <view class="modal-body">
-    <view class="form-item">
-      <text class="form-label">私教</text>
-      <text class="form-value">{{selectedCoach.name}}</text>
-    </view>
-    <view class="form-item">
-      <text class="form-label">课程类型</text>
-      <picker mode="selector" range="{{['增肌', '减脂', '塑形', '康复', '拳击']}}" bindchange="onInputChange" data-field="type">
-        <view class="picker">{{bookingForm.type}}</view>
-      </picker>
-    </view>
-    <view class="form-item">
-      <text class="form-label">时长(分钟)</text>
-      <input class="form-input" type="number" value="{{bookingForm.duration}}" bindinput="onInputChange" data-field="duration" />
-    </view>
-    <view class="form-item">
-      <text class="form-label">课程节数</text>
-      <input class="form-input" type="number" value="{{bookingForm.totalSessions}}" bindinput="onInputChange" data-field="totalSessions" />
-    </view>
-    <view class="form-item">
-      <text class="form-label">价格(元)</text>
-      <input class="form-input" type="number" value="{{bookingForm.price}}" bindinput="onInputChange" data-field="price" />
-    </view>
-  </view>
-  <view class="modal-footer">
-    <button class="btn-cancel" bindtap="onCloseModal">取消</button>
-    <button class="btn-confirm" bindtap="onConfirmBooking">确认购买</button>
-  </view>
+  <view class="empty" wx:if="{{coaches.length === 0}}">暂无私教</view>
 </view>
