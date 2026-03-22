@@ -4,7 +4,7 @@ Page({
   data: {
     activeTab: 'course',
     courseBookings: [],
-    privateBookings: []
+    privateTrainings: []
   },
 
   onShow() {
@@ -30,16 +30,16 @@ Page({
   async loadData() {
     wx.showLoading({ title: '加载中...' });
     try {
-      const [courseBookings, privateBookings] = await Promise.all([
+      const [courseBookings, privateTrainings] = await Promise.all([
         http.get('/member/my-course-bookings'),
-        http.get('/member/my-private-bookings')
+        http.get('/member/my-private-trainings')
       ]);
-      this.setData({ courseBookings, privateBookings });
+      console.log('课程预约:', courseBookings);
+      console.log('私教课程:', privateTrainings);
+      this.setData({ courseBookings, privateTrainings });
     } catch (err) {
       console.error('加载失败', err);
-      if (err.message && err.message.includes('登录')) {
-        wx.navigateTo({ url: '/pages/login/login' });
-      }
+      wx.showToast({ title: '加载失败', icon: 'none' });
     } finally {
       wx.hideLoading();
     }
@@ -58,11 +58,7 @@ Page({
         if (res.confirm) {
           wx.showLoading({ title: '取消中...' });
           try {
-            if (type === 'course') {
-              await http.delete(`/member/book/course/${id}`);
-            } else {
-              await http.delete(`/member/book/private/booking/${id}`);
-            }
+            await http.delete(`/member/book/course/${id}`);
             wx.showToast({ title: '已取消', icon: 'success' });
             this.loadData();
           } catch (err) {
