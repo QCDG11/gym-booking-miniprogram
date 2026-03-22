@@ -1,0 +1,243 @@
+.container {
+  min-height: 100vh;
+  background-color: #f5f5f5;
+}
+
+.tabs {
+  display: flex;
+  background: #fff;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.tab {
+  flex: 1;
+  text-align: center;
+  padding: 28rpx 0;
+  font-size: 28rpx;
+  color: #666;
+  position: relative;
+}
+
+.tab.active {
+  color: #1890ff;
+  font-weight: bold;
+}
+
+.tab.active::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60rpx;
+  height: 4rpx;
+  background: #1890ff;
+  border-radius: 2rpx;
+}
+
+.content {
+  padding: 20rpx;
+}
+
+.training-card {
+  background: #fff;
+  border-radius: 16rpx;
+  padding: 24rpx;
+  margin-bottom: 20rpx;
+}
+
+.training-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16rpx;
+}
+
+.training-type {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+.training-status {
+  font-size: 24rpx;
+  color: #1890ff;
+  background: #e6f7ff;
+  padding: 4rpx 16rpx;
+  border-radius: 20rpx;
+}
+
+.training-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.training-coach, .training-sessions, .training-expire {
+  font-size: 26rpx;
+  color: #666;
+  margin-top: 8rpx;
+}
+
+.training-actions {
+  margin-top: 20rpx;
+}
+
+.btn-book {
+  background: #1890ff;
+  color: #fff;
+  font-size: 26rpx;
+  border-radius: 30rpx;
+}
+
+.btn-book[disabled] {
+  background: #ccc;
+}
+
+.booking-card {
+  background: #fff;
+  border-radius: 16rpx;
+  padding: 24rpx;
+  margin-bottom: 20rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.booking-info {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.booking-time, .booking-location, .booking-note, .booking-status {
+  font-size: 26rpx;
+  color: #666;
+  margin-top: 8rpx;
+}
+
+.booking-status {
+  color: #1890ff;
+}
+
+.booking-actions {
+  flex-shrink: 0;
+  margin-left: 20rpx;
+}
+
+.btn-cancel {
+  background: #fff;
+  color: #ff4d4f;
+  border: 1rpx solid #ff4d4f;
+  font-size: 24rpx;
+  padding: 10rpx 24rpx;
+  border-radius: 20rpx;
+}
+
+.empty {
+  text-align: center;
+  padding: 100rpx;
+  color: #999;
+  font-size: 28rpx;
+}
+
+/* 弹窗样式 */
+.modal-mask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 100;
+}
+
+.modal {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #fff;
+  border-radius: 24rpx 24rpx 0 0;
+  z-index: 101;
+  padding: 30rpx;
+  padding-bottom: calc(30rpx + env(safe-area-inset-bottom));
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30rpx;
+}
+
+.modal-title {
+  font-size: 32rpx;
+  font-weight: bold;
+}
+
+.modal-close {
+  font-size: 44rpx;
+  color: #999;
+  line-height: 1;
+}
+
+.modal-body {
+  
+}
+
+.form-item {
+  display: flex;
+  align-items: center;
+  padding: 20rpx 0;
+  border-bottom: 1rpx solid #eee;
+}
+
+.form-label {
+  width: 160rpx;
+  font-size: 28rpx;
+  color: #333;
+}
+
+.form-value {
+  flex: 1;
+  font-size: 28rpx;
+  color: #333;
+}
+
+.form-input {
+  flex: 1;
+  font-size: 28rpx;
+  color: #333;
+}
+
+.picker {
+  flex: 1;
+  font-size: 28rpx;
+  color: #333;
+}
+
+.modal-footer {
+  display: flex;
+  margin-top: 40rpx;
+}
+
+.modal-footer .btn-cancel, .modal-footer .btn-confirm {
+  flex: 1;
+  height: 80rpx;
+  line-height: 80rpx;
+  border-radius: 40rpx;
+  font-size: 28rpx;
+}
+
+.modal-footer .btn-cancel {
+  background: #f5f5f5;
+  color: #666;
+  margin-right: 20rpx;
+}
+
+.modal-footer .btn-confirm {
+  background: #1890ff;
+  color: #fff;
+}

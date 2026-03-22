@@ -1,0 +1,132 @@
+const http = require('../../utils/http.js');
+
+Page({
+  data: {
+    privateTrainings: [],
+    activeTab: 'trainings',
+    showBookingModal: false,
+    selectedTraining: null,
+    bookingForm: {
+      bookedTime: '',
+      location: '',
+      note: ''
+    }
+  },
+
+  onShow() {
+    this.loadData();
+  },
+
+  async loadData() {
+    wx.showLoading({ title: '加载中...' });
+    try {
+      const [trainings, bookings] = await Promise.all([
+        http.get('/member/my-private-trainings'),
+        http.get('/member/my-private-bookings')
+      ]);
+      this.setData({ 
+        privateTrainings: trainings,
+        privateBookings: bookings
+      });
+    } catch (err) {
+      wx.showToast({ title: '加载失败', icon: 'none' });
+    } finally {
+      wx.hideLoading();
+    }
+  },
+
+  onTabChange(e) {
+    this.setData({ activeTab: e.currentTarget.dataset.tab });
+  },
+
+  onBookSession(e) {
+    const training = e.currentTarget.dataset.training;
+    if (training.remainingSessions <= 0) {
+      wx.showToast({ title: '剩余次数不足', icon: 'none' });
+      return;
+    }
+    this.setData({
+      selectedTraining: training,
+      showBookingModal: true,
+      bookingForm: {
+        bookedTime: '',
+        location: training.coach?.name + '工作室',
+        note: ''
+      }
+    });
+  },
+
+  onCloseModal() {
+    this.setData({
+      showBookingModal: false,
+      selectedTraining: null
+    });
+  },
+
+  onInputChange(e) {
+    const field = e.currentTarget.dataset.field;
+    const value = e.detail.value;
+    const bookingForm = this.data.bookingForm;
+    bookingForm[field] = value;
+    this.setData({ bookingForm });
+  },
+
+  onDateChange(e) {
+    const bookingForm = this.data.bookingForm;
+    bookingForm.bookedTime = e.detail.value;
+    this.setData({ bookingForm });
+  },
+
+  async onConfirmBooking() {
+    const { selectedTraining, bookingForm } = this.data;
+    
+    if (!bookingForm.bookedTime) {
+      wx.showToast({ title: '请选择预约时间', icon: 'none' });
+      return;
+    }
+
+    wx.showModal({
+      title: '确认预约',
+      content: '确定要预约私教课程吗？',
+      success: async (res) => {
+        if (res.confirm) {
+          wx.showLoading({ title: '提交中...' });
+          try {
+            const bookedTime = new Date(bookingForm.bookedTime).toISOString();
+            await http.post(`/member/book/private/${selectedTraining.id}`, {
+              bookedTime,
+              location: bookingForm.location,
+              note: bookingForm.note
+            });
+            wx.showToast({ title: '预约成功', icon: 'success' });
+            this.onCloseModal();
+            this.loadData();
+          } catch (err) {
+            wx.showToast({ title: err.message || '预约失败', icon: 'none' });
+          } finally {
+            wx.hideLoading();
+          }
+        }
+      }
+    });
+  },
+
+  async onCancel(e) {
+    const { id } = e.currentTarget.dataset;
+    wx.showModal({
+      title: '确认取消',
+      content: '确定要取消此预约吗？',
+      success: async (res) => {
+        if (res.confirm) {
+          try {
+            await http.delete(`/member/book/private/booking/${id}`);
+            wx.showToast({ title: '已取消', icon: 'success' });
+            this.loadData();
+          } catch (err) {
+            wx.showToast({ title: '取消失败', icon: 'none' });
+          }
+        }
+      }
+    });
+  }
+});
