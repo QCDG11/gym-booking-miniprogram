@@ -1,26 +1,42 @@
 <view class="container">
-  <view class="header">
-    <view class="avatar">
-      <text class="avatar-text">{{userInfo.nickname || userInfo.username}}</text>
-    </view>
-    <text class="username">{{userInfo.username}}</text>
-    <text class="role">{{userInfo.role}}</text>
-  </view>
-
-  <view class="menu-list">
-    <view class="menu-item">
-      <text class="menu-label">昵称</text>
-      <text class="menu-value">{{userInfo.nickname || '-'}}</text>
-    </view>
-    <view class="menu-item">
-      <text class="menu-label">手机</text>
-      <text class="menu-value">{{userInfo.phone || '-'}}</text>
-    </view>
-    <view class="menu-item">
-      <text class="menu-label">性别</text>
-      <text class="menu-value">{{userInfo.gender || '-'}}</text>
+  <!-- 用户信息卡片 -->
+  <view class="user-card">
+    <view class="avatar">{{userInfo.username[0] || '我'}}</view>
+    <view class="user-info">
+      <text class="nickname">{{userInfo.nickname || userInfo.username || '用户'}}</text>
+      <text class="role">{{userInfo.role === 'MEMBER' ? '会员' : userInfo.role}}</text>
     </view>
   </view>
 
-  <button class="btn-logout" bindtap="onLogout">退出登录</button>
+  <!-- 用户资料 -->
+  <view class="info-section">
+    <view class="info-item">
+      <text class="info-label">昵称</text>
+      <text class="info-value">{{userInfo.nickname || '-'}}</text>
+    </view>
+    <view class="info-item">
+      <text class="info-label">手机</text>
+      <text class="info-value">{{userInfo.phone || '-'}}</text>
+    </view>
+    <view class="info-item">
+      <text class="info-label">性别</text>
+      <text class="info-value">{{userInfo.gender || '-'}}</text>
+    </view>
+  </view>
+
+  <!-- 功能菜单 -->
+  <view class="menu-section">
+    <view class="menu-item" wx:for="{{menuItems}}" wx:key="id" bindtap="onMenuTap" data-url="{{item.url}}">
+      <view class="menu-left">
+        <text class="menu-icon">{{item.icon}}</text>
+        <text class="menu-name">{{item.name}}</text>
+      </view>
+      <text class="menu-arrow">></text>
+    </view>
+  </view>
+
+  <!-- 退出按钮 -->
+  <view class="logout-section">
+    <button class="btn-logout" bindtap="onLogout">退出登录</button>
+  </view>
 </view>

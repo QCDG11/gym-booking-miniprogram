@@ -3,10 +3,7 @@ const http = require('../../utils/http.js');
 Page({
   data: {
     userInfo: null,
-    stats: {
-      courseBookings: 0,
-      privateSessions: 0
-    },
+    stats: { courseBookings: 0, privateSessions: 0 },
     quickActions: [
       { id: 1, name: '课程预约', icon: '📅', url: '/pages/courses/courses', color: '#FF6B6B' },
       { id: 2, name: '私教预约', icon: '👨‍🏫', url: '/pages/coaches/coaches', color: '#4ECDC4' },
@@ -38,7 +35,6 @@ Page({
       const userInfo = await http.get('/auth/me');
       const courseBookings = await http.get('/member/my-course-bookings');
       const privateTrainings = await http.get('/member/my-private-trainings');
-      
       this.setData({
         userInfo,
         stats: {
@@ -53,6 +49,7 @@ Page({
 
   onQuickAction(e) {
     const { url } = e.currentTarget.dataset;
+    console.log('点击跳转:', url);
     wx.navigateTo({ url });
   }
 });

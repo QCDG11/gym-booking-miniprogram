@@ -21,7 +21,7 @@
     </view>
   </view>
 
-  <!-- 快捷功能 -->
+  <!-- 快捷功能 2x2 -->
   <view class="section">
     <view class="section-title">快捷功能</view>
     <view class="action-grid">
