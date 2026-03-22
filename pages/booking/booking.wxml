@@ -10,13 +10,13 @@
     <block wx:for="{{courseBookings}}" wx:key="id">
       <view class="booking-card">
         <view class="booking-header">
-          <text class="booking-title">{{item.schedule?.courseName || '课程预约'}}</text>
+          <text class="booking-title">{{item.courseName || item.schedule.courseName || '课程预约'}}</text>
           <text class="booking-status {{item.status === 'CONFIRMED' ? 'confirmed' : 'cancelled'}}">{{item.status === 'CONFIRMED' ? '已预约' : '已取消'}}</text>
         </view>
         <view class="booking-body">
-          <text class="booking-info">🕐 {{item.schedule?.startTime}}</text>
-          <text class="booking-info">📍 {{item.schedule?.location}}</text>
-          <text class="booking-info">👨‍🏫 {{item.schedule?.coachName}}</text>
+          <text class="booking-info">🕐 {{item.schedule.startTime}}</text>
+          <text class="booking-info">📍 {{item.location || item.schedule.location}}</text>
+          <text class="booking-info">👨‍🏫 {{item.coachName || item.schedule.coachName}}</text>
         </view>
         <view class="booking-footer" wx:if="{{item.status === 'CONFIRMED'}}">
           <button class="btn-cancel" bindtap="onCancel" data-id="{{item.id}}" data-type="course">取消预约</button>
