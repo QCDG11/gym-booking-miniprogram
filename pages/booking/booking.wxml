@@ -1,31 +1,57 @@
 <view class="container">
-  <view class="section">
-    <view class="section-title">课程预约</view>
-    <view class="booking-list">
-      <view class="booking-item" wx:for="{{courseBookings}}" wx:key="id">
-        <view class="booking-info">
-          <text class="booking-name">{{item.schedule.course.name}}</text>
-          <text class="booking-time">{{item.schedule.startTime}}</text>
-          <text class="booking-status">{{item.status}}</text>
+  <!-- Tab切换 -->
+  <view class="tabs">
+    <view class="tab {{activeTab === 'course' ? 'active' : ''}}" bindtap="onTabChange" data-tab="course">课程预约</view>
+    <view class="tab {{activeTab === 'private' ? 'active' : ''}}" bindtap="onTabChange" data-tab="private">私教预约</view>
+  </view>
+
+  <!-- 课程预约列表 -->
+  <view class="content" wx:if="{{activeTab === 'course'}}">
+    <block wx:for="{{courseBookings}}" wx:key="id">
+      <view class="booking-card">
+        <view class="booking-header">
+          <text class="booking-title">{{item.schedule?.courseName || '课程预约'}}</text>
+          <text class="booking-status {{item.status === 'CONFIRMED' ? 'confirmed' : 'cancelled'}}">{{item.status === 'CONFIRMED' ? '已预约' : '已取消'}}</text>
         </view>
-        <button class="btn-cancel" wx:if="{{item.status === 'CONFIRMED'}}" bindtap="onCancel" data-id="{{item.id}}" data-type="course">取消</button>
+        <view class="booking-body">
+          <text class="booking-info">🕐 {{item.schedule?.startTime}}</text>
+          <text class="booking-info">📍 {{item.schedule?.location}}</text>
+          <text class="booking-info">👨‍🏫 {{item.schedule?.coachName}}</text>
+        </view>
+        <view class="booking-footer" wx:if="{{item.status === 'CONFIRMED'}}">
+          <button class="btn-cancel" bindtap="onCancel" data-id="{{item.id}}" data-type="course">取消预约</button>
+        </view>
       </view>
-      <view wx:if="{{courseBookings.length === 0}}" class="empty">暂无预约</view>
+    </block>
+    <view class="empty" wx:if="{{courseBookings.length === 0}}">
+      <text class="empty-icon">📋</text>
+      <text>暂无课程预约</text>
+      <button class="btn-go" bindtap="goToCourses">去预约</button>
     </view>
   </view>
 
-  <view class="section">
-    <view class="section-title">私教预约</view>
-    <view class="booking-list">
-      <view class="booking-item" wx:for="{{privateBookings}}" wx:key="id">
-        <view class="booking-info">
-          <text class="booking-name">{{item.privateTraining.type}}</text>
-          <text class="booking-time">{{item.bookedTime}}</text>
-          <text class="booking-status">{{item.status}}</text>
+  <!-- 私教预约列表 -->
+  <view class="content" wx:if="{{activeTab === 'private'}}">
+    <block wx:for="{{privateBookings}}" wx:key="id">
+      <view class="booking-card">
+        <view class="booking-header">
+          <text class="booking-title">私教课程</text>
+          <text class="booking-status {{item.status === 'CONFIRMED' ? 'confirmed' : 'cancelled'}}">{{item.status === 'CONFIRMED' ? '已预约' : '已取消'}}</text>
         </view>
-        <button class="btn-cancel" wx:if="{{item.status === 'CONFIRMED'}}" bindtap="onCancel" data-id="{{item.id}}" data-type="private">取消</button>
+        <view class="booking-body">
+          <text class="booking-info">🕐 {{item.bookedTime}}</text>
+          <text class="booking-info">📍 {{item.location}}</text>
+          <text class="booking-info">📝 {{item.note || '无备注'}}</text>
+        </view>
+        <view class="booking-footer" wx:if="{{item.status === 'CONFIRMED'}}">
+          <button class="btn-cancel" bindtap="onCancel" data-id="{{item.id}}" data-type="private">取消预约</button>
+        </view>
       </view>
-      <view wx:if="{{privateBookings.length === 0}}" class="empty">暂无预约</view>
+    </block>
+    <view class="empty" wx:if="{{privateBookings.length === 0}}">
+      <text class="empty-icon">💪</text>
+      <text>暂无私教预约</text>
+      <button class="btn-go" bindtap="goToCoaches">去预约</button>
     </view>
   </view>
 </view>

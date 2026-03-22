@@ -1,30 +1,48 @@
 <view class="container">
-  <view class="section">
-    <view class="section-title">全部课程</view>
-    <view class="course-list">
-      <view class="course-item" wx:for="{{courses}}" wx:key="id">
-        <image class="course-image" src="{{item.imageUrl || '/images/course-default.jpg'}}" mode="aspectFill" />
-        <view class="course-info">
-          <text class="course-name">{{item.name}}</text>
-          <text class="course-desc">{{item.description}}</text>
-          <text class="course-price">¥{{item.price || 0}}</text>
+  <!-- Tab切换 -->
+  <view class="tabs">
+    <view class="tab {{activeTab === 'schedule' ? 'active' : ''}}" bindtap="onTabChange" data-tab="schedule">可预约课程</view>
+    <view class="tab {{activeTab === 'all' ? 'active' : ''}}" bindtap="onTabChange" data-tab="all">全部课程</view>
+  </view>
+
+  <!-- 课表列表 -->
+  <view class="content" wx:if="{{activeTab === 'schedule'}}">
+    <block wx:for="{{schedules}}" wx:key="id">
+      <view class="schedule-card">
+        <view class="schedule-header">
+          <text class="course-name">{{item.courseName}}</text>
+          <text class="schedule-status">{{item.currentParticipants}}/{{item.maxParticipants}}人</text>
+        </view>
+        <view class="schedule-body">
+          <view class="schedule-info">
+            <text class="info-item">👨‍🏫 {{item.coachName}}</text>
+            <text class="info-item">📍 {{item.location}}</text>
+            <text class="info-item">🕐 {{item.startTime}}</text>
+          </view>
+          <button class="btn-book" bindtap="onBookCourse" data-id="{{item.id}}" wx:if="{{item.currentParticipants < item.maxParticipants}}">预约</button>
+          <button class="btn-full" wx:else disabled>已满</button>
         </view>
       </view>
+    </block>
+    <view class="empty" wx:if="{{schedules.length === 0}}">
+      <text>暂无可预约课程</text>
     </view>
   </view>
 
-  <view class="section">
-    <view class="section-title">可预约课表</view>
-    <view class="schedule-list">
-      <view class="schedule-item" wx:for="{{schedules}}" wx:key="id">
-        <view class="schedule-info">
-          <text class="schedule-name">{{item.courseName}}</text>
-          <text class="schedule-coach">教练：{{item.coachName}}</text>
-          <text class="schedule-time">{{item.startTime}}</text>
-          <text class="schedule-location">场地：{{item.location}}</text>
+  <!-- 全部课程 -->
+  <view class="content" wx:if="{{activeTab === 'all'}}">
+    <block wx:for="{{courses}}" wx:key="id">
+      <view class="course-card">
+        <view class="course-info">
+          <text class="course-name">{{item.name}}</text>
+          <text class="course-desc">{{item.description}}</text>
+          <text class="course-meta">⏱ {{item.duration}}分钟 | 👥 最多{{item.maxParticipants}}人</text>
         </view>
-        <button class="btn-book" bindtap="onBookCourse" data-id="{{item.id}}">预约</button>
+        <view class="course-price">¥{{item.price}}</view>
       </view>
+    </block>
+    <view class="empty" wx:if="{{courses.length === 0}}">
+      <text>暂无课程</text>
     </view>
   </view>
 </view>

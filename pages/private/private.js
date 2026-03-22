@@ -2,20 +2,15 @@ const http = require('../../utils/http.js');
 
 Page({
   data: {
-    privateTrainings: [],
     activeTab: 'trainings',
-    showBookingModal: false,
+    privateTrainings: [],
+    privateBookings: [],
+    showModal: false,
     selectedTraining: null,
-    bookingForm: {
-      bookedTime: '',
-      location: '',
-      note: ''
-    }
+    form: { bookedTime: '', location: '', note: '' }
   },
 
-  onShow() {
-    this.loadData();
-  },
+  onShow() { this.loadData(); },
 
   async loadData() {
     wx.showLoading({ title: '加载中...' });
@@ -24,10 +19,7 @@ Page({
         http.get('/member/my-private-trainings'),
         http.get('/member/my-private-bookings')
       ]);
-      this.setData({ 
-        privateTrainings: trainings,
-        privateBookings: bookings
-      });
+      this.setData({ privateTrainings: trainings, privateBookings: bookings });
     } catch (err) {
       wx.showToast({ title: '加载失败', icon: 'none' });
     } finally {
@@ -47,57 +39,43 @@ Page({
     }
     this.setData({
       selectedTraining: training,
-      showBookingModal: true,
-      bookingForm: {
-        bookedTime: '',
-        location: training.coach?.name + '工作室',
-        note: ''
-      }
+      showModal: true,
+      form: { bookedTime: '', location: training.coach?.name + '工作室', note: '' }
     });
   },
 
   onCloseModal() {
-    this.setData({
-      showBookingModal: false,
-      selectedTraining: null
-    });
+    this.setData({ showModal: false, selectedTraining: null });
   },
 
   onInputChange(e) {
     const field = e.currentTarget.dataset.field;
-    const value = e.detail.value;
-    const bookingForm = this.data.bookingForm;
-    bookingForm[field] = value;
-    this.setData({ bookingForm });
+    const form = this.data.form;
+    form[field] = e.detail.value;
+    this.setData({ form });
   },
 
   onDateChange(e) {
-    const bookingForm = this.data.bookingForm;
-    bookingForm.bookedTime = e.detail.value;
-    this.setData({ bookingForm });
+    const form = this.data.form;
+    form.bookedTime = e.detail.value;
+    this.setData({ form });
   },
 
-  async onConfirmBooking() {
-    const { selectedTraining, bookingForm } = this.data;
-    
-    if (!bookingForm.bookedTime) {
+  async onConfirm() {
+    const { selectedTraining, form } = this.data;
+    if (!form.bookedTime) {
       wx.showToast({ title: '请选择预约时间', icon: 'none' });
       return;
     }
-
     wx.showModal({
       title: '确认预约',
       content: '确定要预约私教课程吗？',
       success: async (res) => {
         if (res.confirm) {
-          wx.showLoading({ title: '提交中...' });
+          wx.showLoading({ title: '预约中...' });
           try {
-            const bookedTime = new Date(bookingForm.bookedTime).toISOString();
-            await http.post(`/member/book/private/${selectedTraining.id}`, {
-              bookedTime,
-              location: bookingForm.location,
-              note: bookingForm.note
-            });
+            const bookedTime = new Date(form.bookedTime).toISOString();
+            await http.post(`/member/book/private/${selectedTraining.id}`, { bookedTime, location: form.location, note: form.note });
             wx.showToast({ title: '预约成功', icon: 'success' });
             this.onCloseModal();
             this.loadData();
@@ -128,5 +106,9 @@ Page({
         }
       }
     });
+  },
+
+  goToCoaches() {
+    wx.navigateTo({ url: '/pages/coaches/coaches' });
   }
 });

@@ -2,25 +2,33 @@ const http = require('../../utils/http.js');
 
 Page({
   data: {
+    activeTab: 'course',
     courseBookings: [],
     privateBookings: []
   },
 
   onShow() {
-    this.loadBookings();
+    this.loadData();
   },
 
-  async loadBookings() {
+  async loadData() {
     wx.showLoading({ title: '加载中...' });
     try {
-      const courseBookings = await http.get('/member/my-course-bookings');
-      const privateBookings = await http.get('/member/my-private-bookings');
+      const [courseBookings, privateBookings] = await Promise.all([
+        http.get('/member/my-course-bookings'),
+        http.get('/member/my-private-bookings')
+      ]);
       this.setData({ courseBookings, privateBookings });
     } catch (err) {
-      wx.showToast({ title: '加载失败', icon: 'none' });
+      console.error('加载失败', err);
+      wx.showToast({ title: '请先登录', icon: 'none' });
     } finally {
       wx.hideLoading();
     }
+  },
+
+  onTabChange(e) {
+    this.setData({ activeTab: e.currentTarget.dataset.tab });
   },
 
   async onCancel(e) {
@@ -30,6 +38,7 @@ Page({
       content: '确定要取消此预约吗？',
       success: async (res) => {
         if (res.confirm) {
+          wx.showLoading({ title: '取消中...' });
           try {
             if (type === 'course') {
               await http.delete(`/member/book/course/${id}`);
@@ -37,12 +46,22 @@ Page({
               await http.delete(`/member/book/private/booking/${id}`);
             }
             wx.showToast({ title: '已取消', icon: 'success' });
-            this.loadBookings();
+            this.loadData();
           } catch (err) {
-            wx.showToast({ title: '取消失败', icon: 'none' });
+            wx.showToast({ title: err.message || '取消失败', icon: 'none' });
+          } finally {
+            wx.hideLoading();
           }
         }
       }
     });
+  },
+
+  goToCourses() {
+    wx.navigateTo({ url: '/pages/courses/courses' });
+  },
+
+  goToCoaches() {
+    wx.navigateTo({ url: '/pages/coaches/coaches' });
   }
 });

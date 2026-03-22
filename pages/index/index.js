@@ -2,23 +2,52 @@ const http = require('../../utils/http.js');
 
 Page({
   data: {
-    banners: [
-      { id: 1, image: '/images/banner1.jpg', url: '' },
-      { id: 2, image: '/images/banner2.jpg', url: '' }
-    ],
+    userInfo: null,
+    stats: {
+      courseBookings: 0,
+      privateSessions: 0
+    },
     quickActions: [
-      { id: 1, name: '课程预约', icon: 'course', url: '/pages/courses/courses' },
-      { id: 2, name: '私教预约', icon: 'coach', url: '/pages/coaches/coaches' },
-      { id: 3, name: '我的预约', icon: 'booking', url: '/pages/booking/booking' },
-      { id: 4, name: '我的私教', icon: 'private', url: '/pages/private/private' }
-    ]
+      { id: 1, name: '课程预约', icon: '📅', url: '/pages/courses/courses', color: '#FF6B6B' },
+      { id: 2, name: '私教预约', icon: '👨‍🏫', url: '/pages/coaches/coaches', color: '#4ECDC4' },
+      { id: 3, name: '我的预约', icon: '📋', url: '/pages/booking/booking', color: '#45B7D1' },
+      { id: 4, name: '我的私教', icon: '💪', url: '/pages/private/private', color: '#96CEB4' }
+    ],
+    recommendedCourses: []
+  },
+
+  onLoad() {
+    this.checkLogin();
   },
 
   onShow() {
-    // 检查登录状态
+    if (wx.getStorageSync('token')) {
+      this.loadUserData();
+    }
+  },
+
+  checkLogin() {
     const token = wx.getStorageSync('token');
     if (!token) {
       wx.navigateTo({ url: '/pages/login/login' });
+    }
+  },
+
+  async loadUserData() {
+    try {
+      const userInfo = await http.get('/auth/me');
+      const courseBookings = await http.get('/member/my-course-bookings');
+      const privateTrainings = await http.get('/member/my-private-trainings');
+      
+      this.setData({
+        userInfo,
+        stats: {
+          courseBookings: courseBookings.length,
+          privateSessions: privateTrainings.reduce((sum, t) => sum + t.remainingSessions, 0)
+        }
+      });
+    } catch (err) {
+      console.error('加载失败', err);
     }
   },
 

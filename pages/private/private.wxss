@@ -1,9 +1,39 @@
-.container { padding: 20rpx; }
-.section { margin-bottom: 30rpx; }
-.section-title { font-size: 30rpx; font-weight: bold; margin-bottom: 16rpx; }
-.list { background: #fff; border-radius: 8rpx; }
-.item { padding: 24rpx; border-bottom: 1rpx solid #eee; display: flex; align-items: center; }
-.item text { flex: 1; }
-.name { font-size: 28rpx; }
-.desc { font-size: 24rpx; color: #666; }
-.empty { text-align: center; padding: 60rpx; color: #999; }
+.container { min-height: 100vh; background: #f5f5f5; }
+.tabs { display: flex; background: #fff; position: sticky; top: 0; z-index: 10; }
+.tab { flex: 1; text-align: center; padding: 30rpx 0; font-size: 28rpx; color: #666; position: relative; }
+.tab.active { color: #667eea; font-weight: bold; }
+.tab.active::after { content: ''; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 60rpx; height: 6rpx; background: #667eea; border-radius: 3rpx; }
+.content { padding: 20rpx; }
+.training-card { background: #fff; border-radius: 20rpx; padding: 30rpx; margin-bottom: 20rpx; box-shadow: 0 4rpx 20rpx rgba(0,0,0,0.05); }
+.training-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20rpx; }
+.training-type { font-size: 32rpx; font-weight: bold; color: #333; }
+.training-status { font-size: 24rpx; color: #52c41a; background: #f6ffed; padding: 8rpx 20rpx; border-radius: 20rpx; }
+.training-info { display: flex; flex-direction: column; }
+.training-info text { font-size: 26rpx; color: #666; margin-top: 8rpx; }
+.training-action { margin-top: 20rpx; }
+.btn-book { background: linear-gradient(135deg, #667eea, #764ba2); color: #fff; font-size: 26rpx; padding: 16rpx 40rpx; border-radius: 30rpx; }
+.btn-book[disabled] { background: #ccc; }
+.booking-card { background: #fff; border-radius: 20rpx; padding: 30rpx; margin-bottom: 20rpx; box-shadow: 0 4rpx 20rpx rgba(0,0,0,0.05); }
+.booking-info { display: flex; flex-direction: column; }
+.booking-time, .booking-location, .booking-note { font-size: 26rpx; color: #666; margin-top: 8rpx; }
+.booking-status-row { display: flex; justify-content: space-between; align-items: center; margin-top: 20rpx; padding-top: 20rpx; border-top: 1rpx solid #f0f0f0; }
+.booking-status { font-size: 24rpx; color: #52c41a; }
+.booking-status.confirmed { color: #52c41a; }
+.btn-cancel { background: #fff; color: #ff4d4f; border: 1rpx solid #ff4d4f; font-size: 24rpx; padding: 10rpx 24rpx; border-radius: 20rpx; }
+.empty { text-align: center; padding: 100rpx; background: #fff; border-radius: 20rpx; }
+.empty text { font-size: 28rpx; color: #999; display: block; }
+.btn-go { margin-top: 30rpx; background: linear-gradient(135deg, #667eea, #764ba2); color: #fff; font-size: 26rpx; padding: 20rpx 60rpx; border-radius: 30rpx; }
+.modal-mask { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 100; }
+.modal { position: fixed; left: 0; right: 0; bottom: 0; background: #fff; border-radius: 32rpx 32rpx 0 0; z-index: 101; padding: 40rpx; padding-bottom: calc(40rpx + env(safe-area-inset-bottom)); }
+.modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 40rpx; }
+.modal-title { font-size: 34rpx; font-weight: bold; }
+.modal-close { font-size: 50rpx; color: #999; line-height: 1; }
+.form-item { display: flex; align-items: center; padding: 24rpx 0; border-bottom: 1rpx solid #f0f0f0; }
+.form-label { width: 160rpx; font-size: 28rpx; color: #333; }
+.form-value { flex: 1; font-size: 28rpx; color: #333; }
+.form-input { flex: 1; font-size: 28rpx; }
+.picker { flex: 1; font-size: 28rpx; color: #333; }
+.modal-footer { display: flex; margin-top: 40rpx; }
+.modal-footer .btn-cancel, .modal-footer .btn-confirm { flex: 1; height: 88rpx; line-height: 88rpx; border-radius: 44rpx; font-size: 28rpx; }
+.modal-footer .btn-cancel { background: #f5f5f5; color: #666; margin-right: 20rpx; }
+.modal-footer .btn-confirm { background: linear-gradient(135deg, #667eea, #764ba2); color: #fff; }

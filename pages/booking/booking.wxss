@@ -3,66 +3,134 @@
   background: #f5f5f5;
 }
 
-.section {
+.tabs {
+  display: flex;
   background: #fff;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.tab {
+  flex: 1;
+  text-align: center;
+  padding: 30rpx 0;
+  font-size: 28rpx;
+  color: #666;
+  position: relative;
+}
+
+.tab.active {
+  color: #667eea;
+  font-weight: bold;
+}
+
+.tab.active::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60rpx;
+  height: 6rpx;
+  background: #667eea;
+  border-radius: 3rpx;
+}
+
+.content {
+  padding: 20rpx;
+}
+
+.booking-card {
+  background: #fff;
+  border-radius: 20rpx;
   padding: 30rpx;
   margin-bottom: 20rpx;
+  box-shadow: 0 4rpx 20rpx rgba(0,0,0,0.05);
 }
 
-.section-title {
-  font-size: 32rpx;
-  font-weight: bold;
-  color: #333;
-  margin-bottom: 20rpx;
-}
-
-.booking-list {
-  display: flex;
-  flex-direction: column;
-  gap: 20rpx;
-}
-
-.booking-item {
+.booking-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 24rpx;
-  background: #f9f9f9;
-  border-radius: 16rpx;
+  margin-bottom: 20rpx;
 }
 
-.booking-info {
-  display: flex;
-  flex-direction: column;
-  gap: 8rpx;
-}
-
-.booking-name {
-  font-size: 30rpx;
+.booking-title {
+  font-size: 32rpx;
   font-weight: bold;
-}
-
-.booking-time {
-  font-size: 24rpx;
-  color: #666;
+  color: #333;
 }
 
 .booking-status {
   font-size: 24rpx;
-  color: #1890ff;
+  padding: 8rpx 20rpx;
+  border-radius: 20rpx;
+}
+
+.booking-status.confirmed {
+  color: #52c41a;
+  background: #f6ffed;
+  border: 1rpx solid #b7eb8f;
+}
+
+.booking-status.cancelled {
+  color: #999;
+  background: #f5f5f5;
+}
+
+.booking-body {
+  display: flex;
+  flex-direction: column;
+}
+
+.booking-info {
+  font-size: 26rpx;
+  color: #666;
+  margin-top: 8rpx;
+}
+
+.booking-footer {
+  margin-top: 20rpx;
+  padding-top: 20rpx;
+  border-top: 1rpx solid #f0f0f0;
+  display: flex;
+  justify-content: flex-end;
 }
 
 .btn-cancel {
-  padding: 12rpx 24rpx;
   background: #fff;
   color: #ff4d4f;
   border: 1rpx solid #ff4d4f;
-  border-radius: 24rpx;
   font-size: 24rpx;
+  padding: 12rpx 30rpx;
+  border-radius: 30rpx;
 }
 
 .empty {
   text-align: center;
+  padding: 100rpx 50rpx;
+  background: #fff;
+  border-radius: 20rpx;
+}
+
+.empty-icon {
+  font-size: 80rpx;
+  display: block;
+  margin-bottom: 20rpx;
+}
+
+.empty text {
+  font-size: 28rpx;
   color: #999;
-  padding: 40rpx;
+  display: block;
+}
+
+.btn-go {
+  margin-top: 30rpx;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: #fff;
+  font-size: 26rpx;
+  padding: 20rpx 60rpx;
+  border-radius: 30rpx;
 }

@@ -1,17 +1,33 @@
 <view class="container">
-  <!-- 轮播图 -->
-  <swiper class="banner" indicator-dots autoplay circular>
-    <swiper-item wx:for="{{banners}}" wx:key="id">
-      <image class="banner-image" src="{{item.image}}" mode="aspectFill" />
-    </swiper-item>
-  </swiper>
+  <!-- 顶部用户信息 -->
+  <view class="header">
+    <view class="user-card">
+      <view class="avatar">{{userInfo.username[0] || '我'}}</view>
+      <view class="user-info">
+        <text class="nickname">{{userInfo.nickname || userInfo.username || '用户'}}</text>
+        <text class="role">{{userInfo.role === 'MEMBER' ? '会员' : userInfo.role}}</text>
+      </view>
+    </view>
+    <view class="stats-row">
+      <view class="stat-item">
+        <text class="stat-num">{{stats.courseBookings}}</text>
+        <text class="stat-label">课程预约</text>
+      </view>
+      <view class="stat-divider"></view>
+      <view class="stat-item">
+        <text class="stat-num">{{stats.privateSessions}}</text>
+        <text class="stat-label">私教课时</text>
+      </view>
+    </view>
+  </view>
 
   <!-- 快捷功能 -->
-  <view class="quick-actions">
+  <view class="section">
+    <view class="section-title">快捷功能</view>
     <view class="action-grid">
       <view class="action-item" wx:for="{{quickActions}}" wx:key="id" bindtap="onQuickAction" data-url="{{item.url}}">
-        <view class="action-icon">
-          <text class="iconfont">{{item.icon}}</text>
+        <view class="action-icon" style="background: {{item.color}}">
+          <text>{{item.icon}}</text>
         </view>
         <text class="action-name">{{item.name}}</text>
       </view>
@@ -20,9 +36,13 @@
 
   <!-- 今日推荐 -->
   <view class="section">
-    <view class="section-title">今日推荐</view>
-    <view class="section-content">
-      <text class="empty-text">暂无推荐课程</text>
+    <view class="section-title">🏃 今日推荐</view>
+    <view class="recommend-card" bindtap="onQuickAction" data-url="/pages/courses/courses">
+      <view class="recommend-info">
+        <text class="recommend-title">瑜伽课程</text>
+        <text class="recommend-desc">放松身心，提升柔韧性</text>
+      </view>
+      <view class="recommend-btn">立即预约</view>
     </view>
   </view>
 </view>

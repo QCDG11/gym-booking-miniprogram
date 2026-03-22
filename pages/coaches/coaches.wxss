@@ -1,6 +1,25 @@
-.container { padding: 20rpx; }
-.coach-item { background: #fff; padding: 24rpx; margin-bottom: 16rpx; display: flex; justify-content: space-between; align-items: center; border-radius: 8rpx; }
-.coach-name { font-size: 30rpx; font-weight: bold; }
-.coach-specialty { font-size: 26rpx; color: #666; }
-.arrow { color: #999; }
+.container { min-height: 100vh; background: #f5f5f5; }
+.coach-list { padding: 20rpx; }
+.coach-card { background: #fff; border-radius: 20rpx; padding: 30rpx; margin-bottom: 20rpx; display: flex; align-items: center; box-shadow: 0 4rpx 20rpx rgba(0,0,0,0.05); }
+.coach-avatar { width: 100rpx; height: 100rpx; border-radius: 50%; background: linear-gradient(135deg, #667eea, #764ba2); display: flex; align-items: center; justify-content: center; color: #fff; font-size: 40rpx; font-weight: bold; flex-shrink: 0; }
+.coach-info { flex: 1; margin-left: 20rpx; }
+.coach-name { font-size: 32rpx; font-weight: bold; color: #333; }
+.coach-specialty { font-size: 24rpx; color: #667eea; margin-top: 8rpx; display: block; }
+.coach-intro { font-size: 24rpx; color: #999; margin-top: 8rpx; display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.coach-exp { font-size: 22rpx; color: #bbb; margin-top: 8rpx; display: block; }
+.coach-arrow { color: #ccc; font-size: 32rpx; }
 .empty { text-align: center; padding: 100rpx; color: #999; }
+.modal-mask { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 100; }
+.modal { position: fixed; left: 0; right: 0; bottom: 0; background: #fff; border-radius: 32rpx 32rpx 0 0; z-index: 101; padding: 40rpx; padding-bottom: calc(40rpx + env(safe-area-inset-bottom)); }
+.modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 40rpx; }
+.modal-title { font-size: 34rpx; font-weight: bold; }
+.modal-close { font-size: 50rpx; color: #999; line-height: 1; }
+.form-item { display: flex; align-items: center; padding: 24rpx 0; border-bottom: 1rpx solid #f0f0f0; }
+.form-label { width: 160rpx; font-size: 28rpx; color: #333; }
+.form-value { flex: 1; font-size: 28rpx; color: #333; }
+.form-input { flex: 1; font-size: 28rpx; }
+.picker { flex: 1; font-size: 28rpx; color: #333; }
+.modal-footer { display: flex; margin-top: 40rpx; }
+.btn-cancel, .btn-confirm { flex: 1; height: 88rpx; line-height: 88rpx; border-radius: 44rpx; font-size: 28rpx; }
+.btn-cancel { background: #f5f5f5; color: #666; margin-right: 20rpx; }
+.btn-confirm { background: linear-gradient(135deg, #667eea, #764ba2); color: #fff; }

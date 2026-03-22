@@ -3,9 +3,9 @@ const http = require('../../utils/http.js');
 Page({
   data: {
     coaches: [],
+    showModal: false,
     selectedCoach: null,
-    showBookingModal: false,
-    bookingForm: {
+    form: {
       type: '增肌',
       duration: 60,
       totalSessions: 10,
@@ -31,40 +31,33 @@ Page({
 
   onSelectCoach(e) {
     const coach = e.currentTarget.dataset.coach;
-    this.setData({
-      selectedCoach: coach,
-      showBookingModal: true
-    });
+    this.setData({ selectedCoach: coach, showModal: true });
   },
 
   onCloseModal() {
-    this.setData({
-      showBookingModal: false,
-      selectedCoach: null
-    });
+    this.setData({ showModal: false, selectedCoach: null });
   },
 
   onInputChange(e) {
     const field = e.currentTarget.dataset.field;
     const value = e.detail.value;
-    const bookingForm = this.data.bookingForm;
-    bookingForm[field] = field === 'totalSessions' || field === 'duration' ? parseInt(value) : value;
-    this.setData({ bookingForm });
+    const form = this.data.form;
+    form[field] = ['duration', 'totalSessions'].includes(field) ? parseInt(value) : value;
+    this.setData({ form });
   },
 
-  async onConfirmBooking() {
-    const { selectedCoach, bookingForm } = this.data;
-    
+  async onConfirm() {
+    const { selectedCoach, form } = this.data;
     wx.showModal({
       title: '确认购买',
-      content: `确定要购买 ${selectedCoach.name} 的私教课程吗？\n${bookingForm.totalSessions}节课，共 ¥${bookingForm.price}`,
+      content: `购买 ${selectedCoach.name} 的私教课程\n${form.totalSessions}节，共 ¥${form.price}`,
       success: async (res) => {
         if (res.confirm) {
-          wx.showLoading({ title: '提交中...' });
+          wx.showLoading({ title: '购买中...' });
           try {
             await http.post('/member/book/private', {
               coachId: selectedCoach.id,
-              ...bookingForm
+              ...form
             });
             wx.showToast({ title: '购买成功', icon: 'success' });
             this.onCloseModal();
